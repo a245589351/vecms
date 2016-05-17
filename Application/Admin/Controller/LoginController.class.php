@@ -9,6 +9,9 @@ class LoginController extends Controller
 {
 	public function index()
 	{
+		if (session('adminUser')) {
+			$this->redirect('/index.php?m=admin&c=index');
+		}
 		return $this->display();
 	}
 
@@ -41,5 +44,6 @@ class LoginController extends Controller
 	public function loginout()
 	{
 		session('adminUser', null);
+		$this->redirect('/index.php?m=admin&c=login');
 	}
 }
