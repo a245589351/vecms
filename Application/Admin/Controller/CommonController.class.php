@@ -14,7 +14,6 @@ class CommonController extends Controller {
 	}
 	/**
 	 * 初始化
-	 * @return
 	 */
 	private function _init() {
 		// 如果已经登录
