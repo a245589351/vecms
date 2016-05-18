@@ -70,11 +70,11 @@
                         <volist name="menus" id="menu">
                             <tr>
                                 <td><input size="4" type="text" name="" value=""/></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{$menu.menu_id}</td>
+                                <td>{$menu.name}</td>
+                                <td>{$menu.m}</td>
+                                <td>{$menu.type|getMenuType}</td>
+                                <td>{$menu.status|getStatus}</td>
                                 <td><span class="glyphicon glyphicon-edit" aria-hidden="true" id="singcms-edit" attr-id=""></span>    <a href="javascript:void(0)" attr-id="" id="singcms-delete"  attr-a="menu" attr-message="删除"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
                             </tr>
                         </volist>
@@ -84,7 +84,7 @@
                     </form>
                     <nav>
                         <ul class="pagination">
-                            
+                            {$pageRes}
                         </ul>
                     </nav>
                     
@@ -108,11 +108,10 @@
 <script>
 
     var SCOPE = {
-        'add_url' : '/admin.php?c=menu&a=add',
-        'edit_url' : '/admin.php?c=menu&a=edit',
-        'set_status_url' : '/admin.php?c=menu&a=setStatus',
-        'listorder_url' : '/admin.php?c=menu&a=listorder',
-
+        'add_url' : 'admin.php?c=menu&a=add',
+        'edit_url' : 'admin.php?c=menu&a=edit',
+        'set_status_url' : 'admin.php?c=menu&a=setStatus',
+        'listorder_url' : 'admin.php?c=menu&a=listorder',
     }
 </script>
 <include file="Index/footer" />
