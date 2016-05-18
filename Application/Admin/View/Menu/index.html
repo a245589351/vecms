@@ -26,23 +26,23 @@
         </div>
         <!-- /.row -->
         <div class="row">
-            <form action="/admin.php" method="get">
+            <form action="admin.php" method="get">
 
                 <div class="input-group">
                     <span class="input-group-addon">类型</span>
                     <select class="form-control" name="type">
                         <option value='' >请选择类型</option>
 
-                        <option value="1" >后台菜单</option>
-                        <option value="0" >前端导航</option>
-                    <lect>
+                        <option value="1" <if condition="$type eq 1">selected="selected"</if>>后台菜单</option>
+                        <option value="0" <if condition="$type eq 0">selected="selected"</if>>前端导航</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button id="sub_data" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
                 </div>
 
                 <input type="hidden" name="c" value="menu"/>
                 <input type="hidden" name="a" value="index"/>
-                <span class="input-group-btn">
-                  <button id="sub_data" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i><tton>
-                </span>
 
             </form>
         </div>

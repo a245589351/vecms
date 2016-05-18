@@ -12,6 +12,15 @@ class MenuController extends CommonController
 	public function index()
 	{
 		$data = array();
+
+		// 过滤
+		if (isset($_REQUEST['type']) && in_array($_REQUEST['type'], array(0, 1))) {
+			$data['type'] = (int)$_REQUEST['type'];
+			$this->assign('type', $data['type']);
+		} else {
+			$this->assign('type', -100);
+		}
+
 		// 分页操作逻辑
 		$page = $_REQUEST['p'] ? $_REQUEST['p'] : 1;
 		$pageSize   = $_REQUEST['pageSize'] ? $_REQUEST['pageSize'] : 10;
