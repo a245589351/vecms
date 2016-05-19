@@ -37,4 +37,42 @@
 		var url = SCOPE.edit_url + '&id=' + id;
 		window.location.href = url;
 	});
+
+	/**
+	 * 删除模型
+	 */
+	$('.vecms-table #vecms-delete').on('click', function(){
+		var id = $(this).attr('attr-id');
+		var a  = $(this).attr('attr-a');
+		var message = $(this).attr('attr-message');
+		var url = SCOPE.set_status_url;
+
+		var data = {};
+		data['id'] = id;
+		data['status'] = -1;
+
+		layer.open({
+			type: 0,
+			title: '是否提交',
+			btn: ['yes', 'no'],
+			icon: 3,
+			closeBtn: 2,
+			content: '是否确定' + message,
+			scrollBar: true,
+			yes: function(){
+				// 执行相关跳转
+				todelect(url, data);
+			}
+		});
+	});
+
+	function todelect(url, data) {
+		$.post(url, data, function(result){
+			if (result.status == 1) {
+				return dialog.success(result.message, '');
+			} else {
+				return dialog.error(result.message);
+			}
+		}, 'JSON');
+	}
 })();

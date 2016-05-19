@@ -42,6 +42,12 @@ class MenuModel extends Model
 		return $this->_db->where('menu_id=' . $id)->find();
 	}
 
+	/**
+	 * 根据id更新菜单
+	 * @param array $data
+	 * @param int $id
+	 * @return bool
+	 */
 	public function updateMenuById($data, $id)
 	{
 		if (!$id || !is_numeric($id)) {
@@ -51,6 +57,25 @@ class MenuModel extends Model
 			throw_exception('更新的数据不合法');
 		}
 
+		return $this->_db->where('menu_id=' . $id)->save($data);
+	}
+
+	/**
+	 * 根据id更新菜单状态
+	 * @param int $id
+	 * @param int $status
+	 * @return bool
+	 */
+	public function updateStatusById($id, $status)
+	{
+		if (!$id || !is_numeric($id)) {
+			throw_exception('ID不合法');
+		}
+		if (!$status || !is_numeric($status)) {
+			throw_exception('状态不合法');
+		}
+
+		$data['status'] = $status;
 		return $this->_db->where('menu_id=' . $id)->save($data);
 	}
 }

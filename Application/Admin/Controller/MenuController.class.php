@@ -63,7 +63,7 @@ class MenuController extends CommonController
 			}
 
 			if ($menuId) {
-				return $this->save($data, $menuId);
+				return $this->_save($data, $menuId);
 			}
 
 			// 加入数据库
@@ -85,7 +85,33 @@ class MenuController extends CommonController
 		$this->display();
 	}
 
-	public function save($data, $menuId)
+	public function setStatus()
+	{
+		try {
+			if ($_POST) {
+				$id     = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+				$status = isset($_POST['status']) ? (int)$_POST['status'] : 0;
+
+				// 执行数据更新操作
+				$res = D('Menu')->updateStatusById($id, $status);
+				if (false === $res) {
+					return show(0, '操作失败');
+				}
+				return show(1, '操作成功');
+			}
+		} catch(Exception $e) {
+			return show(0, $e->getMessage());
+		}
+
+		return show(0, '没有提交的数据');
+	}
+
+	/**
+	 * 更新菜单
+	 * @param array $data
+	 * @param int $menuId
+	 */
+	private function _save($data, $menuId)
 	{
 		try {
 			$id = D('Menu')->updateMenuById($data, $menuId);
