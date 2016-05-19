@@ -66,6 +66,26 @@
 		});
 	});
 
+	/**
+	 * 排序操作
+	 */
+	$('#button-listorder').on('click', function(){
+		var data = $('#vecms-listorder').serializeArray();
+		var postData = {};
+		$(data).each(function(i){
+			postData[this.name] = this.value;
+		});
+
+		var url = SCOPE.listorder_url;
+		$.post(url, data, function(result){
+			if (result.status == 1) {
+				return dialog.success(result.message, result['data']['jump_url']);
+			} else {
+				return dialog.error(result.message, result['data']['jump_url']);
+			}
+		}, 'JSON');
+	});
+
 	function todelect(url, data) {
 		$.post(url, data, function(result){
 			if (result.status == 1) {

@@ -106,6 +106,35 @@ class MenuController extends CommonController
 		return show(0, '没有提交的数据');
 	}
 
+	public function listorder()
+	{
+		$listorder = isset($_POST['listorder']) ? $_POST['listorder'] : array();
+		$jumpUrl   = $_SERVER['HTTP_REFERER'];
+		$errors    = array();
+		if ($listorder) {
+			try {
+				foreach($listorder as $menuId => $val) {
+					// 执行更新
+					$id = D('Menu')->updateMenuListorderById($menuId, $val);
+					if (false === $id) {
+						$errors[] = $menuId;
+					}
+				}
+			} catch (Exception $e) {
+				return show(0, $e->getMessage(), array('jump_url' => $jumpUrl));
+			}
+
+			if ($errors) {// 有某条数据更新失败
+				return show(0, '排序失败' . implode(',', $errors), array('jump_url' => $jumpUrl));
+			}
+
+			// 排序成功
+			return show(1, '排序成功', array('jump_url' => $jumpUrl));
+		}
+
+		return show(0, '排序数据失败', array('jump_url' => $jumpUrl));
+	}
+
 	/**
 	 * 更新菜单
 	 * @param array $data
@@ -119,7 +148,7 @@ class MenuController extends CommonController
 				return show(0, '更新失败');
 			}
 			return show(1, '更新成功');
-		} catch(Exception $e) {
+		} catch (Exception $e) {
 			return show(0, $e->getMessage());
 		}
 	}
