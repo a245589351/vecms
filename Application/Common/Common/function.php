@@ -39,6 +39,11 @@ function getMenuType($type)
 	return $type == 1 ? '后台菜单' : '前端导航';
 }
 
+/**
+ * 获取菜单的状态
+ * @param int $status
+ * @return string
+ */
 function getStatus($status)
 {
 	if ($status == 0) {
@@ -49,4 +54,30 @@ function getStatus($status)
 		$str = '删除';
 	}
 	return $str;
+}
+
+/**
+ * 获取菜单的url
+ * @param array $nav
+ * @return string
+ */
+function getAdminMenuUrl($nav)
+{
+	$url = 'admin.php?c=' . $nav['c'];
+	$url .= $nav['f'] == 'index' ? '' : ('&a=' . $nav['f']);
+	return $url;
+}
+
+/**
+ * 获取菜单的选中状态
+ * @param string $navc
+ * @return string
+ */
+function getActive($navc)
+{
+	$c = strtolower(CONTROLLER_NAME);
+	if (strtolower($navc) == $c) {
+		return 'class="active"';
+	}
+	return '';
 }

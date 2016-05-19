@@ -34,6 +34,16 @@ class MenuModel extends Model
 		return $this->_db->where($data)->count();
 	}
 
+	public function getAdminMenus()
+	{
+		$where = array(
+			'status' => array('neq', -1),
+			'type'   => array('eq', 1)
+		);
+
+		return $this->_db->where($where)->order('listorder desc, menu_id desc')->select();
+	}
+
 	public function find($id)
 	{
 		if ($id < 1) {

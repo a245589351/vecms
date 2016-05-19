@@ -42,7 +42,7 @@ class MenuController extends CommonController
 			// 加载数据
 			$menuId = isset($_POST['menu_id']) ? (int)$_POST['menu_id'] : 0;
 			$data['name']   = isset($_POST['name']) ? trim($_POST['name']) : '';
-			$data['type']   = isset($_POST['type']) ? (int)$_POST['name'] : 0;
+			$data['type']   = isset($_POST['type']) ? (int)$_POST['type'] : 0;
 			$data['m']      = isset($_POST['m']) ? trim($_POST['m']) : '';
 			$data['c']      = isset($_POST['c']) ? trim($_POST['c']) : '';
 			$data['f']      = isset($_POST['f']) ? trim($_POST['f']) : '';
