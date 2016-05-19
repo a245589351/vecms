@@ -5,6 +5,7 @@
 namespace Admin\Controller;
 
 use Think\Controller;
+use Think\Exception;
 use Think\Page;
 
 class MenuController extends CommonController
@@ -39,6 +40,7 @@ class MenuController extends CommonController
 		if ($_POST) { // 更新数据
 
 			// 加载数据
+			$menuId = isset($_POST['menu_id']) ? (int)$_POST['menu_id'] : 0;
 			$data['name']   = isset($_POST['name']) ? trim($_POST['name']) : '';
 			$data['type']   = isset($_POST['type']) ? (int)$_POST['name'] : 0;
 			$data['m']      = isset($_POST['m']) ? trim($_POST['m']) : '';
@@ -60,6 +62,10 @@ class MenuController extends CommonController
 				return show(0, '方法名不能为空');
 			}
 
+			if ($menuId) {
+				return $this->save($data, $menuId);
+			}
+
 			// 加入数据库
 			$menuId = D('Menu')->insert($data);
 			if ($menuId) {
@@ -68,6 +74,27 @@ class MenuController extends CommonController
 			return show(0, '新增失败', $menuId);
 		} else {
 			$this->display();
+		}
+	}
+
+	public function edit()
+	{
+		$menuId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+		$menu = D('Menu')->find($menuId);
+		$this->assign('menu', $menu);
+		$this->display();
+	}
+
+	public function save($data, $menuId)
+	{
+		try {
+			$id = D('Menu')->updateMenuById($data, $menuId);
+			if (false === $id) {
+				return show(0, '更新失败');
+			}
+			return show(1, '更新成功');
+		} catch(Exception $e) {
+			return show(0, $e->getMessage());
 		}
 	}
 }

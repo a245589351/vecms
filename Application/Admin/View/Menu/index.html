@@ -54,7 +54,7 @@
                 <h3></h3>
                 <div class="table-responsive">
                     <form id="singcms-listorder">
-                    <table class="table table-bordered table-hover singcms-table">
+                    <table class="table table-bordered table-hover vecms-table">
                         <thead>
                         <tr>
                             <th width="14">排序</th>
@@ -75,7 +75,7 @@
                                 <td>{$menu.m}</td>
                                 <td>{$menu.type|getMenuType}</td>
                                 <td>{$menu.status|getStatus}</td>
-                                <td><span class="glyphicon glyphicon-edit" aria-hidden="true" id="singcms-edit" attr-id=""></span>    <a href="javascript:void(0)" attr-id="" id="singcms-delete"  attr-a="menu" attr-message="删除"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
+                                <td><span class="glyphicon glyphicon-edit" aria-hidden="true" id="vecms-edit" attr-id="{$menu.menu_id}"></span>    <a href="javascript:void(0)" attr-id="" id="singcms-delete"  attr-a="menu" attr-message="删除"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
                             </tr>
                         </volist>
 
