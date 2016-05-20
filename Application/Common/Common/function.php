@@ -95,3 +95,12 @@ function showKind($status, $data)
 	}
 	exit(json_encode(array('error' => 1, 'message' => '上传失败')));
 }
+
+/**
+ * 获取登录用户的用户名
+ * @return string
+ */
+function getLoginUsername()
+{
+	return $_SESSION['adminUser']['username'] ? $_SESSION['adminUser']['username'] : '';
+}

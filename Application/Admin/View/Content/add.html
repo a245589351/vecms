@@ -27,7 +27,7 @@
 			<div class="row">
 				<div class="col-lg-6">
 
-					<form class="form-horizontal" id="singcms-form" enctype="multipart/form-data">
+					<form class="form-horizontal" id="vecms-form" enctype="multipart/form-data">
 						<div class="form-group">
 							<label for="inputname" class="col-sm-2 control-label">标题:</label>
 							<div class="col-sm-5">
@@ -54,9 +54,9 @@
 							<div class="col-sm-5">
 								<select class="form-control" name="title_font_color">
 									<option value="">==请选择颜色==</option>
-
-									<option value=""></option>
-
+									<foreach name="titleFontColor" item="color">
+										<option value="{$key}">{$color}</option>
+									</foreach>
 								</select>
 							</div>
 						</div>
@@ -64,8 +64,9 @@
 							<label for="inputname" class="col-sm-2 control-label">所属栏目:</label>
 							<div class="col-sm-5">
 								<select class="form-control" name="catid">
-
-									<option value=""></option>
+									<foreach name="websiteMenus" item="menu">
+										<option value="{$menu.menu_id}">{$menu.name}</option>
+									</foreach>
 								</select>
 							</div>
 						</div>
@@ -74,8 +75,9 @@
 							<label for="inputname" class="col-sm-2 control-label">来源:</label>
 							<div class="col-sm-5">
 								<select class="form-control" name="copyfrom">
-
-									<option value=""></option>
+									<foreach name="copyFrom" item="from">
+										<option value="{$key}">{$from}</option>
+									</foreach>
 								</select>
 							</div>
 						</div>
@@ -105,7 +107,7 @@
 
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<button type="button" class="btn btn-default" id="singcms-button-submit">提交</button>
+								<button type="button" class="btn btn-default" id="vecms-button-submit">提交</button>
 							</div>
 						</div>
 					</form>
@@ -125,7 +127,7 @@
 </div>
 <script>
 	var SCOPE = {
-		'save_url': 'admin.php?c=content&a=add',
+		'save_url': 'admin.php?c=content&a=addPost',
 		'jump_url': 'admin.php?c=content',
 		'ajax_upload_image_url': 'admin.php?c=image&a=ajaxuploadimage',
 		'ajax_upload_swf': 'Public/js/party/uploadify.swf',
