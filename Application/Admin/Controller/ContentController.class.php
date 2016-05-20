@@ -101,4 +101,31 @@ class ContentController extends CommonController
 		}
 		return show(0, '没有提交数据');
 	}
+
+	public function edit()
+	{
+		$newsId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+		if ($newsId < 0) { // id不合法
+			$this->redirect('admin.php?c=content');
+		}
+
+		$news = D('News')->find($newsId);
+		if (!$news) {
+			$this->redirect('admin.php?c=content');
+		}
+		$newsContent = D('NewsContent')->find($newsId);
+		if ($newsContent) { // 新闻详情
+			$news['content'] = $newsContent['content'];
+		}
+
+		// 栏目列表
+		$this->assign('websiteMenus', D('Menu')->getBarMenus());
+		// 标题颜色
+		$this->assign('titleFontColor', C('TITLE_FONT_COLOR'));
+		// 来源
+		$this->assign('copyFrom', C('COPY_FROM'));
+
+		$this->assign('news', $news);
+		$this->display();
+	}
 }

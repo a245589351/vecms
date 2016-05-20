@@ -73,4 +73,18 @@ class NewsModel extends Model
 
 		return $this->_db->where($option['where'])->count();
 	}
+
+	/**
+	 * 根据id获取文章数据
+	 * @param array|mixed $id
+	 * @return array|mixed
+	 */
+	public function find($id)
+	{
+		if (!$id || !is_numeric($id)) {
+			return array();
+		}
+		$data = $this->_db->where('news_id=' . $id)->find();
+		return $data;
+	}
 }

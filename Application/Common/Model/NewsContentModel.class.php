@@ -28,4 +28,18 @@ class NewsContentModel extends Model
 		}
 		return $this->_db->add($data);
 	}
+
+	/**
+	 * 根据id获取文章详情数据
+	 * @param array|mixed $id
+	 * @return array|mixed
+	 */
+	public function find($id)
+	{
+		if (!$id || !is_numeric($id)) {
+			return array();
+		}
+		$data = $this->_db->where('id=' . $id)->find();
+		return $data;
+	}
 }
