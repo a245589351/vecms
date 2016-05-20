@@ -13,7 +13,7 @@
 
 					<ol class="breadcrumb">
 						<li>
-							<i class="fa fa-dashboard"></i> <a href="/admin.php?c=content">文章管理</a>
+							<i class="fa fa-dashboard"></i> <a href="admin.php?c=content">文章管理</a>
 						</li>
 						<li class="active">
 							<i class="fa fa-table"></i>文章列表
@@ -29,15 +29,19 @@
 				</button>
 			</div>
 			<div class="row">
-				<form action="/admin.php" method="get">
+				<form action="admin.php" method="get">
 					<div class="col-md-3">
 						<div class="input-group">
 							<span class="input-group-addon">栏目</span>
 							<select class="form-control" name="catid">
 								<option value=''>全部分类</option>
-
-								<option value=""></option>
-
+								<foreach name="websiteMenus" item="menu">
+									<eq name="menu.menu_id" value="$catid">
+										<option value="{$menu.menu_id}" selected>{$menu.name}</option>
+									<else/>
+										<option value="{$menu.menu_id}">{$menu.name}</option>
+									</eq>
+								</foreach>
 							</select>
 						</div>
 					</div>
@@ -45,11 +49,10 @@
 					<input type="hidden" name="a" value="index"/>
 					<div class="col-md-3">
 						<div class="input-group">
-							<input class="form-control" name="title" type="text" value="" placeholder="文章标题"/>
-                <span class="input-group-btn">
-                  <button id="sub_data" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>
-				  </button>
-                </span>
+							<input class="form-control" name="title" type="text" value="{$title}" placeholder="文章标题"/>
+							<span class="input-group-btn">
+								<button id="sub_data" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+							</span>
 						</div>
 					</div>
 				</form>
@@ -75,20 +78,19 @@
 								</tr>
 								</thead>
 								<tbody>
-
+								<volist name="news" id="new">
 								<tr>
 									<td><input type="checkbox" name="pushcheck" value="{$new.news_id}"></td>
 									<td><input size=4 type='text' name='' value=""/></td><!--6.7-->
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td>{$new.news_id}</td>
+									<td>{$new.title}</td>
+									<td>{$new.catid|getCatName=$websiteMenus,###}</td>
+									<td>{$new.copyfrom|getCopyFromById}</td>
+									<td>{$new.thumb|isThumb}</td>
+									<td>{$new.create_time|date="Y-m-d H:i",###}</td>
 									<td>
-
+										<span attr-status="" attr-id="" class="sing_cursor singcms-on-off" id="singcms-on-off">{$new.status|getStatus}</span>
 									</td>
-									<td></td>
-									<td><span attr-status="" attr-id="" class="sing_cursor singcms-on-off"
-											  id="singcms-on-off"></span></td>
 									<td><span class="sing_cursor glyphicon glyphicon-edit" aria-hidden="true"
 											  id="singcms-edit" attr-id=""></span>
 										<a href="javascript:void(0)" id="singcms-delete" attr-id="" attr-message="删除">
@@ -97,18 +99,17 @@
 
 									</td>
 								</tr>
-
-
+								</volist>
 								</tbody>
 							</table>
 							<nav>
-
-								<ul>
-
+								<ul class="pagination">
+									{$pageRes}
 								</ul>
-
 							</nav>
-
+							<div>
+								<button  id="button-listorder" type="button" class="btn btn-primary dropdown-toggle" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>更新排序 </button>
+							</div>
 						</form>
 
 					</div>

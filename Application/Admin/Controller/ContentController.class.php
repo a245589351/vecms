@@ -5,11 +5,40 @@
 namespace Admin\Controller;
 
 use Think\Controller;
+use Think\Page;
 
 class ContentController extends CommonController
 {
 	public function index()
 	{
+		// 加载数据
+		$where = array();
+		$title = isset($_GET['title']) ? trim($_GET['title']) : '';
+		$catid = isset($_GET['catid']) ? (int)$_GET['catid'] : 0;
+		$page  = isset($_REQUEST['p']) ? (int)$_REQUEST['p'] : 1;
+		$pageSize = 10;
+
+		if ($title) {
+			$where['title'] = $title;
+		}
+		if ($catid) {
+			$where['catid'] = $catid;
+		}
+
+		$news  = D('News')->getNews($where, $page, $pageSize);
+		$count = D('News')->getNewsCount($where);
+
+		// 分页类
+		$res = new Page($count, $pageSize);
+		$pageRes = $res->show();
+
+		// 栏目列表
+		$this->assign('websiteMenus', D('Menu')->getBarMenus());
+		$this->assign('pageRes', $pageRes);
+		$this->assign('news', $news);
+		$this->assign('title', $title);
+		$this->assign('catid', $catid);
+
 		$this->display();
 	}
 

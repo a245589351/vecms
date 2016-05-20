@@ -20,6 +20,20 @@ function show($status, $message, $data = array())
 }
 
 /**
+ * 返回kindupload的上传结果
+ * @param int $status
+ * @param array $data
+ */
+function showKind($status, $data)
+{
+	header('Content-type: application/json; charset = UTF-8');
+	if ($status == 0) {
+		exit(json_encode(array('error' => 0, 'url' => $data)));
+	}
+	exit(json_encode(array('error' => 1, 'message' => '上传失败')));
+}
+
+/**
  * 将密码进行md5加密
  * @param string $password
  * @return string
@@ -83,24 +97,49 @@ function getActive($navc)
 }
 
 /**
- * 返回kindupload的上传结果
- * @param int $status
- * @param array $data
- */
-function showKind($status, $data)
-{
-	header('Content-type: application/json; charset = UTF-8');
-	if ($status == 0) {
-		exit(json_encode(array('error' => 0, 'url' => $data)));
-	}
-	exit(json_encode(array('error' => 1, 'message' => '上传失败')));
-}
-
-/**
  * 获取登录用户的用户名
  * @return string
  */
 function getLoginUsername()
 {
 	return $_SESSION['adminUser']['username'] ? $_SESSION['adminUser']['username'] : '';
+}
+
+/**
+ * 获取栏目的名称
+ * @param $navs
+ * @param $id
+ * @return string
+ */
+function getCatName($navs, $id)
+{
+	$navList = array();
+	foreach ($navs as $nav) {
+		$navList[$nav['menu_id']] = $nav['name'];
+	}
+	return isset($navList[$id]) ? $navList[$id] : '';
+}
+
+/**
+ * 根据id获取来源
+ * @param $id
+ * @return string
+ */
+function getCopyFromById($id)
+{
+	$copyFrom = C('COPY_FROM');
+	return isset($copyFrom[$id]) ? $copyFrom[$id] : '';
+}
+
+/**
+ * 判断是否有缩略图
+ * @param $thumb
+ * @return string
+ */
+function isThumb($thumb)
+{
+	if ($thumb) {
+		return '<span style="color: red">有</span>';
+	}
+	return '无';
 }
