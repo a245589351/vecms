@@ -87,4 +87,22 @@ class NewsModel extends Model
 		$data = $this->_db->where('news_id=' . $id)->find();
 		return $data;
 	}
+
+	/**
+	 * 更新文章主表
+	 * @param $id
+	 * @param $data
+	 * @return bool
+	 */
+	public function updateById($id, $data)
+	{
+		if (!$id || !is_numeric($id)) {
+			throw_exception('ID不合法');
+		}
+		if (!$data || !is_array($data)) {
+			throw_exception('更新数据不合法');
+		}
+
+		return $this->_db->where('news_id=' . $id)->save($data);
+	}
 }

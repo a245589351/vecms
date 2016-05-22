@@ -5,6 +5,7 @@
 namespace Admin\Controller;
 
 use Think\Controller;
+use Think\Exception;
 use Think\Page;
 
 class ContentController extends CommonController
@@ -87,6 +88,12 @@ class ContentController extends CommonController
 				return show(0, 'content不能为空');
 			}
 
+			// 更新操作
+			$newsId = isset($_POST['news_id']) ? (int)$_POST['news_id'] : 0;
+			if ($newsId) {
+				return $this->_save($data, $newsContentData, $newsId);
+			}
+
 			// 添加数据
 			$newsId = D('News')->insert($data);
 			if ($newsId) {
@@ -127,5 +134,31 @@ class ContentController extends CommonController
 
 		$this->assign('news', $news);
 		$this->display();
+	}
+
+	public function setStatus()
+	{
+		
+	}
+
+	/**
+	 * 文章更新
+	 * @param $data
+	 * @param $newsContentData
+	 * @param $newsId
+	 * @return mixed|void
+	 */
+	private function _save($data, $newsContentData, $newsId)
+	{
+		try {
+			$id = D('News')->updateById($newsId, $data);
+			$condId = D('NewsContent')->updateNewsById($newsId, $newsContentData);
+			if (false === $id || false === $condId) {
+				return show(0, '更新失败');
+			}
+			return show(1, '更新成功');
+		} catch (Exception $e) {
+			return $this->show(0, $e->getMessage());
+		}
 	}
 }

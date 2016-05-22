@@ -39,7 +39,28 @@ class NewsContentModel extends Model
 		if (!$id || !is_numeric($id)) {
 			return array();
 		}
-		$data = $this->_db->where('id=' . $id)->find();
+		$data = $this->_db->where('news_id=' . $id)->find();
 		return $data;
+	}
+
+	/**
+	 * 更新文章副表
+	 * @param $id
+	 * @param $data
+	 * @return bool
+	 */
+	public function updateNewsById($id, $data)
+	{
+		if (!$id || !is_numeric($id)) {
+			throw_exception('ID不合法');
+		}
+		if (!$data || !is_array($data)) {
+			throw_exception('更新数据不合法');
+		}
+		if (isset($data['content']) && $data['content']) {
+			$data['content'] = htmlspecialchars($data['content']);
+		}
+
+		return $this->_db->where('news_id=' . $id)->save($data);
 	}
 }
